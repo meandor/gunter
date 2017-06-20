@@ -14,7 +14,7 @@ public class TestServerMain {
         String host = args[0];
         int port = Integer.valueOf(args[1]);
 
-        ObjectBroker objectBroker = ObjectBroker.init(host, port, true);
+        ObjectBroker objectBroker = ObjectBroker.init(host, port, false);
         NameService nameService = objectBroker.getNameService();
         Calculator calculator = new Calculator();
         nameService.rebind(calculator, "zumsel");

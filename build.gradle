@@ -3,16 +3,14 @@ apply plugin: 'application'
 
 repositories {
     mavenLocal()
-    mavenCentral()
     jcenter()
 }
 
 dependencies {
     compile 'de.haw.vs:candy-kingdom:0.2.1'
-    testCompile 'junit:junit:4.12'
-
     compile('ch.qos.logback:logback-classic:1.2.3')
+    testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'App'
+mainClassName = 'server.TestServerMain'
 
