@@ -3,10 +3,12 @@ apply plugin: 'application'
 
 repositories {
     mavenLocal()
+    mavenCentral()
     jcenter()
 }
 
 dependencies {
+    compile 'de.haw.vs:nameservice-protocol:0.1.3'
     compile 'de.haw.vs:middleware:0.1.3'
     testCompile 'junit:junit:4.12'
 }
