@@ -8,6 +8,8 @@ public class Calculator extends _CalculatorImplBase {
 
     @Override
     public String getStr(double a) throws Exception {
-        return "" + a;
+        if (a > 42)
+            throw new RuntimeException("Argument too big");
+        else return "The value passed is " + a;
     }
 }

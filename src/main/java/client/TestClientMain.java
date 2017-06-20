@@ -19,8 +19,12 @@ public class TestClientMain {
         Object rawRef = nameService.resolve("zumsel");
         _CalculatorImplBase implBase = _CalculatorImplBase.narrowCast(rawRef);
         try {
-            double result = implBase.add(1d, 2d);
-            System.out.println(result);
+            for (int i = 0; i < 100; i++) {
+                double result = implBase.add(i, i);
+                System.out.println(result);
+            }
+            String getStrResult = implBase.getStr(2);
+            System.out.println(getStrResult);
         } catch (Exception e) {
             e.printStackTrace();
         }

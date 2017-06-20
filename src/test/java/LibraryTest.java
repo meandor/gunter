@@ -1,4 +1,14 @@
+import client.TestClientMain;
+import math_ops.Calculator;
+import math_ops._CalculatorImplBase;
+import mware_lib.NameService;
+import mware_lib.ObjectBroker;
+import org.junit.Ignore;
 import org.junit.Test;
+import server.TestServerMain;
+
+import java.util.concurrent.ThreadPoolExecutor;
+
 import static org.junit.Assert.*;
 
 /*
@@ -8,8 +18,41 @@ import static org.junit.Assert.*;
  * @author fawin, @date 6/19/17 8:38 PM
  */
 public class LibraryTest {
-    @Test public void testSomeLibraryMethod() {
-        Library classUnderTest = new Library();
-        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
+    private int port = 8082;
+    private String host = "localhost";
+    private void startClient() {
+
+        ObjectBroker objectBroker = ObjectBroker.init(host, port, true);
+        NameService nameService = objectBroker.getNameService();
+        Object rawRef = nameService.resolve("zumsel");
+        _CalculatorImplBase implBase = _CalculatorImplBase.narrowCast(rawRef);
+        try {
+            implBase.add(1d, 2d);
+            implBase.getStr(2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void startServer() {
+        ObjectBroker objectBroker = ObjectBroker.init(host, port, true);
+        NameService nameService = objectBroker.getNameService();
+        Calculator calculator = new Calculator();
+        nameService.rebind(calculator, "zumsel");
+    }
+
+    @Test
+    // Doesnt work, logger not found error
+    @Ignore
+    public void testSomeLibraryMethod() throws InterruptedException {
+        Thread mainRunner = new Thread(this::startServer);
+        mainRunner.start();
+
+        for (int i = 0; i < 20; i++) {
+            new Thread(this::startClient).start();
+        }
+
+        Thread.sleep(1000);
     }
 }
